@@ -1,0 +1,33 @@
+import numpy as np
+import matplotlib.pyplot as plt import seaborn as
+sns from sklearn.datasets import load_iris from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+sns.set(style='whitegrid')
+iris = load_iris()
+X_iris = iris.data 
+y_iris = iris.target 
+scaler = StandardScaler()
+X_iris_std = scaler.fit_transform(X_iris)
+lda = LinearDiscriminantAnalysis(n_components=2)
+X_lda_iris = lda.fit_transform(X_iris_std, y_iris)
+plt.figure(figsize=(10, 6))colors = ['r', 'g', 'b'] 
+for i, color in enumerate(colors):
+plt.scatter(X_lda_iris[y_iris == i, 0], X_lda_iris[y_iris == i, 1], alpha=0.8,
+color=color, label=iris.target_names[i]) 
+plt.title('LDA: Iris Dataset Projection to 2D')
+plt.xlabel('LD1') 
+plt.ylabel('LD2')
+plt.legend(loc='best') 
+plt.show()
+pca = PCA(n_components=2)
+X_pca_iris = pca.fit_transform(X_iris_std)
+plt.figure(figsize=(10, 6)) for i, 
+color in enumerate(colors):
+plt.scatter(X_pca_iris[y_iris == i, 0], X_pca_iris[y_iris == i, 1], alpha=0.8,
+color=color, label=iris.target_names[i])
+plt.title('PCA: Iris Dataset Projection to 2D') 
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.legend(loc='best') 
+plt.show() 
