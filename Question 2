@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_wine from 
+sklearn.model_selection import train_test_split
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score,
+confusion_matrix wine = load_wine() X_wine = wine.data y_wine = wine.target
+X_train, X_test, y_train, y_test = train_test_split(X_wine, y_wine, test_size=0.3, random_state=42)
+lda_classifier = LinearDiscriminantAnalysis()
+lda_classifier.fit(X_train, y_train)
+y_pred_lda = lda_classifier.predict(X_test)
+accuracy_lda = accuracy_score(y_test, y_pred_lda)
+precision_lda = precision_score(y_test, y_pred_lda,
+average='weighted') recall_lda = recall_score(y_test,
+y_pred_lda, average='weighted') conf_matrix_lda =
+confusion_matrix(y_test, y_pred_lda)
+print(f"LDA Classifier Accuracy: {accuracy_lda:.2f}")
+print(f"LDA Classifier Precision: {precision_lda:.2f}") 
+print(f"LDA Classifier Recall: {recall_lda:.2f}")
+print("LDA Confusion Matrix:\n", conf_matrix_lda) 
+log_reg = LogisticRegression(max_iter=1000) 
+log_reg.fit(X_train, y_train)
+y_pred_log_reg = log_reg.predict(X_test)
+accuracy_log_reg = accuracy_score(y_test, y_pred_log_reg) 
+precision_log_reg = precision_score(y_test, y_pred_log_reg, 
+average='weighted') recall_log_reg = recall_score(y_test, y_pred_log_reg,
+average='weighted') conf_matrix_log_reg = confusion_matrix(y_test, y_pred_log_reg)
+print(f"Logistic Regression Accuracy: {accuracy_log_reg:.2f}")
+print(f"Logistic Regression Precision: {precision_log_reg:.2f}") 
+print(f"Logistic Regression Recall: {recall_log_reg:.2f}") 
+print("Logistic Regression Confusion Matrix:\n", conf_matrix_log_reg) 
